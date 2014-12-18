@@ -13,7 +13,7 @@ import (
 func main() {
 	targetFile := flag.String("t", "app/setup.go", "Target file to generate.")
 	routeTarget := flag.String("r", "app/routes/routes.go", "Target route file to generate.")
-	runMode := flag.String("m", "", "RunMode to initialize application in.")
+	runMode := flag.String("m", "", "RunMode to generate code for (Default: '' -- no mode specific stuff done).")
 	flag.Parse()
 
 	packageName := flag.Arg(0)
@@ -38,10 +38,12 @@ func main() {
 
 	// Generate two source files.
 	templateArgs := map[string]interface{}{
-		"Controllers":    sourceInfo.ControllerSpecs(),
-		"ValidationKeys": sourceInfo.ValidationKeys,
-		"ImportPaths":    calcImportAliases(sourceInfo),
-		"TestSuites":     sourceInfo.TestSuites(),
+		"DefaultRunMode":        runMode,
+		"ApplicationImportPath": packageName,
+		"Controllers":           sourceInfo.ControllerSpecs(),
+		"ValidationKeys":        sourceInfo.ValidationKeys,
+		"ImportPaths":           calcImportAliases(sourceInfo),
+		"TestSuites":            sourceInfo.TestSuites(),
 	}
 
 	generateSources(SETUP, *targetFile, templateArgs)
@@ -138,6 +140,22 @@ var (
 	// So compiler won't complain if the generated code doesn't reference reflect package...
 	_ = reflect.Invalid
 )
+
+func Initialize() {
+	InitializeWithRunMode("{{.DefaultRunMode}}")
+}
+
+func InitializeWithRunMode(runMode string) {
+	revel.Init(runMode, "", ".")
+	revel.ImportPath = "{{.ApplicationImportPath}}"
+
+	revel.TemplatePaths = []string{
+		revel.ViewsPath,
+		{{/*path.Join(RevelPath, "templates"),*/}}
+	}
+
+	SetupRevel()	
+}
 
 func SetupRevel() {
 	{{range $i, $c := .Controllers}}

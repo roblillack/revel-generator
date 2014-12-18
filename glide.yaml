@@ -1,4 +1,4 @@
-package: gen-revel-setup
+package: revel-generator
 
 import:
   - package: github.com/revel/revel
