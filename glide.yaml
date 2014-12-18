@@ -1,0 +1,24 @@
+package: gen-revel-setup
+
+import:
+  - package: github.com/revel/revel
+    vcs: git
+    ref: v0.11.1
+# REVEL deps:
+  - package: code.google.com/p/go.net
+    ref: 90e232e2462d
+    vcs: hg
+    subpackages: websocket
+  - package: github.com/agtorre/gocolorize
+    ref: f42b554bf7f006936130c9bb4f971afd2d87f671
+    vcs: git
+  - package: gopkg.in/fsnotify.v1
+    repo: https://github.com/go-fsnotify/fsnotify
+    ref: v1.0.4
+    vcs: git
+  - package: github.com/robfig/config
+    ref: 09efbd4617d1beb41b72f6668403b1e383b6a4cf
+    vcs: git
+  - package: github.com/robfig/pathtree
+    ref: 41257a1839e945fce74afd070e02bab2ea2c776a
+    vcs: git
