@@ -6,8 +6,9 @@ import:
     ref: v0.11.1
 # REVEL deps:
   - package: code.google.com/p/go.net
-    ref: 90e232e2462d
-    vcs: hg
+    ref: 74d798388a60469ca4db467af4ff70242c2d9ead
+    repo: https://github.com/golang/net
+    vcs: git
     subpackages: websocket
   - package: github.com/agtorre/gocolorize
     ref: f42b554bf7f006936130c9bb4f971afd2d87f671
